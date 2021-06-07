@@ -23,7 +23,7 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
       required: 'Arquivo obrigatório',
       validate: {
         lessThan10MB: (files: FileList) =>
-          Number(files[0].size) <= 10 / 1024 / 1024 ||
+          Number(files[0].size) < 10000000 ||
           'O arquivo deve ser menor que 10MB',
         acceptedFormats: (files: FileList) =>
           fileTypeRegex.test(files[0].type) ||
@@ -74,7 +74,7 @@ export function FormAddImage({ closeModal }: FormAddImageProps): JSX.Element {
 
   const onSubmit = async (data: Record<string, unknown>): Promise<void> => {
     try {
-      if (!imageUrl || data.image) {
+      if (!imageUrl || !data.image) {
         toast({
           title: 'Imagem não adicionada',
           description:
