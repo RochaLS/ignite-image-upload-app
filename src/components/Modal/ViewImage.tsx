@@ -6,7 +6,6 @@ import {
   ModalBody,
   Image,
   Link,
-  useBreakpointValue,
   Flex,
 } from '@chakra-ui/react';
 
@@ -30,7 +29,9 @@ export function ModalViewImage({
         </ModalBody>
         <ModalFooter>
           <Flex w="100%" justifyContent="left">
-            <Link href={imgUrl}>Abrir original</Link>
+            <Link isExternal href={imgUrl}>
+              Abrir original
+            </Link>
           </Flex>
         </ModalFooter>
       </ModalContent>
