@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Button, Box } from '@chakra-ui/react';
 import { useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
@@ -8,6 +9,7 @@ import { CardList } from '../components/CardList';
 import { api } from '../services/api';
 import { Loading } from '../components/Loading';
 import { Error } from '../components/Error';
+import { ModalViewImage } from '../components/Modal/ViewImage';
 
 type ImageData = {
   title: string;
@@ -45,7 +47,7 @@ export default function Home(): JSX.Element {
   );
 
   const formattedData = useMemo(() => {
-    data?.pages.map(page => page.data.data).flat();
+    return data?.pages.map(page => page.data.data).flat();
   }, [data]);
 
   if (isLoading) {
@@ -63,9 +65,13 @@ export default function Home(): JSX.Element {
       <Box maxW={1120} px={20} mx="auto" my={20}>
         <CardList cards={formattedData} />
         {isFetchingNextPage ? (
-          <Button>Carregando...</Button>
+          <Button mt="10">Carregando...</Button>
         ) : (
-          <Button onClick={() => fetchNextPage()}>Carregar mais...</Button>
+          hasNextPage && (
+            <Button mt="10" onClick={() => fetchNextPage()}>
+              Carregar mais...
+            </Button>
+          )
         )}
       </Box>
     </>
